@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/sweep",
+      "schedule": "0 8 * * *"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/cron/(.*)",
+      "headers": [
+        { "key": "x-cron-secret", "value": "{{CRON_SECRET}}" }
+      ]
+    }
+  ]
+}

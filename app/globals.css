@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --accent: #3b82f6;
+}
+
+/* smooth scrolling, better defaults */
+*, *::before, *::after { box-sizing: border-box; }
+body { min-height: 100dvh; }
+
+/* status color classes used across components */
+.status-healthy  { @apply text-emerald-400; }
+.status-approaching { @apply text-amber-400; }
+.status-over     { @apply text-red-400; }
+
+.badge-healthy   { @apply bg-emerald-900/40 text-emerald-400 ring-1 ring-emerald-500/30; }
+.badge-approaching { @apply bg-amber-900/40 text-amber-400 ring-1 ring-amber-500/30; }
+.badge-over      { @apply bg-red-900/40 text-red-400 ring-1 ring-red-500/30; }
