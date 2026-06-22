@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { createClient } from '@/lib/supabase/server';
 import { renderChangeOrderPDF } from '@/lib/pdf/change-order';
-import { resend, FROM } from '@/lib/email/resend';
+import { getResend, FROM } from '@/lib/email/resend';
 import type { LineItem } from '@/lib/supabase/types';
 
 interface CreateChangeOrderInput {
@@ -112,7 +112,7 @@ export async function sendChangeOrder(changeOrderId: string): Promise<{ error?: 
 
   const total = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(co.total_cents / 100);
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: project.client_email,
     replyTo: ws?.reply_to_email ?? undefined,

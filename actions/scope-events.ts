@@ -1,6 +1,6 @@
 'use server';
 
-import { resend, FROM } from '@/lib/email/resend';
+import { getResend, FROM } from '@/lib/email/resend';
 import { ApproachingScopeEmail, approachingScopeSubject } from '@/lib/email/templates/approaching-scope';
 import { ScopeExceededEmail, scopeExceededSubject } from '@/lib/email/templates/scope-exceeded';
 import { createClient } from '@/lib/supabase/server';
@@ -49,7 +49,7 @@ export async function sendScopeEmail(params: SendScopeEmailParams): Promise<void
           agencyName: rest.agencyName,
         });
 
-  await resend.emails.send({
+  await getResend().emails.send({
     from: FROM,
     to: clientEmail,
     replyTo: rest.replyTo,

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createServiceClient } from '@/lib/supabase/server';
 import { meterStatus } from '@/lib/domain';
-import { resend, FROM } from '@/lib/email/resend';
+import { getResend, FROM } from '@/lib/email/resend';
 import { ApproachingScopeEmail, approachingScopeSubject } from '@/lib/email/templates/approaching-scope';
 import { ScopeExceededEmail, scopeExceededSubject } from '@/lib/email/templates/scope-exceeded';
 import type { Meter, MeterType } from '@/lib/supabase/types';
@@ -83,7 +83,7 @@ export async function GET(req: NextRequest) {
             agencyName: ws.name,
           };
 
-          await resend.emails.send({
+          await getResend().emails.send({
             from: FROM,
             to: project.client_email,
             replyTo: ws.reply_to_email ?? undefined,
