@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { stripe, STRIPE_PRICES } from '@/lib/stripe';
+import { getStripe, STRIPE_PRICES } from '@/lib/stripe';
 import { createClient } from '@/lib/supabase/server';
 
 export async function GET(req: NextRequest) {
@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
 
   const ws = membership.workspaces as unknown as { stripe_customer_id: string | null };
 
-  const session = await stripe.checkout.sessions.create({
+  const session = await getStripe().checkout.sessions.create({
     mode: priceKey === 'lifetime' ? 'payment' : 'subscription',
     customer: ws.stripe_customer_id ?? undefined,
     customer_email: ws.stripe_customer_id ? undefined : user.email,

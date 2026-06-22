@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { stripe } from '@/lib/stripe';
+import { getStripe } from '@/lib/stripe';
 import { createClient } from '@/lib/supabase/server';
 
 export async function GET(req: NextRequest) {
@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
   const ws = membership?.workspaces as unknown as { stripe_customer_id: string | null };
   if (!ws?.stripe_customer_id) return NextResponse.redirect(new URL('/app/settings', req.url));
 
-  const session = await stripe.billingPortal.sessions.create({
+  const session = await getStripe().billingPortal.sessions.create({
     customer: ws.stripe_customer_id,
     return_url: `${process.env.NEXT_PUBLIC_APP_URL}/app/settings`,
   });
